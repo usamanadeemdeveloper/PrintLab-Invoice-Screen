@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container-fluid text-center mx-auto px-0">
+      <div class="bg-dark row mx-auto">
+        <div class="col-lg-4 col-12 text-warning text-center text-lg-start">
+          <button
+            class="border-0 bg-dark text-warning"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Configurations <i class="fa-solid fa-arrow-down-wide-short"></i>
+          </button>
+        </div>
+        <div class="col-lg-5 col-12 text-white text-center" id="datetime"></div>
+      </div>
+      <div class="collapse container-fluid mt-3 mb-3" id="collapseExample">
+        <div class="row offset-2 offset-lg-0">
+          <table
+            class="table-bordered border-2 border border-dark table-responsive text-lg-start text-center"
+            style="width: 17rem"
+            id="configRate"
+          ></table>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid px-0">
+      <div class="row mx-auto">
+        <div class="col-lg-3 bg-dark text-white text-center">
+          Paper Stock : <span id="selectedPaper"></span> | GSM :
+          <span id="selectedGsm"></span>
+        </div>
+        <div
+          class="col-lg-1 col-6 bg-dark text-white ms-lg-5 px-3"
+          style="font-size: 13px"
+        >
+          Last Updated
+        </div>
+        <small class="col-lg-1 col-6 border" id="lastUpdated"></small>
+        <small
+          class="col-lg-1 col-6 bg-dark text-white ps-1 px-0"
+          style="font-size: 13px"
+          >Paper Market Rate</small
+        >
+        <small class="col-lg-1 col-6 border" id="updatedRate"></small>
+        <small
+          class="col-lg-1 col-6 bg-dark text-white px-0 text-center"
+          style="font-size: 13px"
+          >Paper Market Qty</small
+        >
+        <small class="col-lg-1 col-6 border" id="selectedPaperQty"></small>
+        <small
+          class="col-lg-1 col-6 bg-dark text-white px-2"
+          style="font-size: 13px"
+          >Cost Per Sheet</small
+        >
+        <small class="col-lg-1 col-6 border" id="costPerSheet"></small>
+      </div>
+    </div>
+    <div class="container-fluid table-responsive px-0">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Select Product</th>
+            <th scope="col" class="bg-light-warning">Job Color (S)</th>
+            <th scope="col" class="bg-light-warning">Size</th>
+            <th scope="col" class="bg-light-warning">Paper Stock</th>
+            <th scope="col" class="bg-light-warning">GSM</th>
+            <th scope="col" class="bg-light-warning">Sheet Size</th>
+            <th scope="col" class="bg-light-warning"># Of Up' (S)</th>
+            <th scope="col" class="bg-light-warning">Side Option</th>
+            <th scope="col" class="bg-light-warning">Imposition [Possible]</th>
+            <th scope="col" class="bg-light-warning" id="headerAnimation">
+              Job Colors [Black]
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select
+                class="form-select form-select-sm"
+                id="selectProduct"
+              ></select>
+            </td>
+            <td>
+              <select class="form-select form-select-sm" id="colors"></select>
+            </td>
+            <td>
+              <select class="form-select form-select-sm" id="size"></select>
+            </td>
+            <td>
+              <select
+                class="form-select form-select-sm"
+                id="paperStock"
+              ></select>
+            </td>
+            <td>
+              <select class="form-select form-select-sm" id="grams"></select>
+            </td>
+            <td>
+              <select
+                class="form-select form-select-sm"
+                id="sheetSize"
+              ></select>
+            </td>
+            <td class="col-1">
+              <input class="text-center" readonly id="ofUp" value="-" />
+            </td>
+            <td>
+              <select
+                class="form-select form-select-sm"
+                id="sideOption"
+              ></select>
+            </td>
+            <td id="tdImposition">
+              <select
+                class="form-select form-select-sm"
+                id="imposition"
+              ></select>
+            </td>
+            <td id="tdColors">
+              <select
+                class="form-select form-select-sm"
+                id="jobColors"
+              ></select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container-fluid px-0 table-responsive mt-2">
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th>Costing</th>
+            <th colspan="5">Calculated Quantities</th>
+          </tr>
+        </thead>
+        <tbody class="text-center" id="processTable">
+          <tr>
+            <td>PRODUCT QUANTITY</td>
+            <td>MOQ</td>
+          </tr>
+          <tr>
+            <td>QUANTITY IN LEAFS</td>
+            <td id="qty1" data-bs-toggle="tooltip" data-bs-title="if (sideOption is double sided and imposition is applied ){Extract the selected sheetSize value from uping and also from selected press machine, then divide the extracted uping value / by machine value then multiply by 1000 the / 2} else if (sideOption is double sided and imposition is not applied or if sideOption is single sided){do the same but dont divide by 2 at the end!}"></td>
+          </tr>
+          <tr>
+            <td>SHEETS</td>
+            <td id="sheetsRate1" data-bs-toggle="tooltip" data-bs-title="It will take the value of qty in leafs then divide by selected sheetSize value from uping"></td>
+          </tr>
+          <tr>
+            <td>PAPER MART</td>
+            <td class="paperMarketRate" id="paperMart1" data-bs-toggle="tooltip" data-bs-title="It will take the last updated Paper Market Rate of selected paper from Paper Stock and check selected GSM for Paper Rate, each paper has different rates depending on GSM! which is in showing above nav, and then divide by qtys then multiply by the value of sheets!, means previous cell's achived calculation"></td>
+          </tr>
+          <tr>
+            <td>SLICING</td>
+            <td id="slicingCost1" data-bs-toggle="tooltip" data-bs-title="It will take pre define rates of cutting which is 70!,then take the value of sheet's cell and ceil it for slicing imperession which is pre defined 500!, so if you have 250 in sheet,s cell so it will convert it to 500!,then divide by slicing imperession means 500/500, then multiply both values means the value of slicing 70 multiply by 1 cause 500/500 = 1 so finaly you have the cost"></td>
+          </tr>
+          <tr>
+            <td>CTP</td>
+            <td id="ctp1" data-bs-toggle="tooltip" data-bs-title="It is simple get the selected machine's CTP rate from configuration and multiply by (job colors front + job colors back) but if imposition is applied you cant get the job colors back value so it will only multiply by the front value"></td>
+          </tr>
+          <tr>
+            <td>PRESS</td>
+            <td id="press1" data-bs-toggle="tooltip" data-bs-title="It will take the selected machine's impressions value and multiply by (job colors front + job colors back) but if imposition is applied you cant get the job colors back value so it will only multiply by the front value!"></td>
+          </tr>
+          <tr>
+            <td>FIXED COST</td>
+            <td class="bg-dark text-white" id="fixedCost1" data-bs-toggle="tooltip" data-bs-title="It will give the total sum of PaperMart,Slicing,Ctp,Press!"></td>
+          </tr>
+          <tr>
+            <td>Price Per Qty</td>
+            <td id="pricePerQty1" data-bs-toggle="tooltip" data-bs-title="It will take the fixed cost value then multiply by the pre defined margin, and then again take the value of fixed cost then add pre defined setupFee,now then you have two values add then and you have gain the price per qty value!"></td>
+          </tr>
+          <tr>
+            <td>Price Per Unit</td>
+            <td id="pricePerUnit1" data-bs-toggle="tooltip" data-bs-title="It will take the pricePerQty value and divide by the qty in leafs value!"></td>
+          </tr>
+          <tr>
+            <td>Total Profit</td>
+            <td class="bg-dark text-white" id="totalProfit" data-bs-toggle="tooltip" data-bs-title="It will take the pricePerQty value and then substract by the fixed cost value so you have the profit value!"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container text-center">
+      <button class="btn btn-warning" id="generateInvoiceBtn">
+        Generate Invoice
+      </button>
+    </div>
+    <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="invoiceModalLabel">Invoice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="invoiceModalContent">
+            <!-- Dynamic content will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

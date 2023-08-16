@@ -1,3 +1,4 @@
+var sizeValue;
 const errorText = "Error!";
 const tooltipTriggerList = document.querySelectorAll(
   '[data-bs-toggle="tooltip"]'
@@ -783,6 +784,7 @@ paperStockSelect.addEventListener("change", (selectedPaper) => {
   selectedPaper = paperStockSelect.value;
   selectedPaperElement.innerText = selectedPaper;
   getLastUpdatedFields(selectedPaper);
+  // selectedFields(selectedPaper);
 });
 const gsmSelect = document.getElementById("grams");
 const selectedGsmElement = document.getElementById("selectedGsm");
@@ -792,6 +794,7 @@ gsmSelect.addEventListener("change", (selectedGsm) => {
   selectedGsm = gsmSelect.value;
   selectedGsmElement.innerText = selectedGsm;
   getLastUpdatedFields(selectedGsm);
+  // selectedFields(selectedGsm);
 });
 
 getLastUpdatedFields(selectedPaper, selectedGsm);
@@ -870,9 +873,8 @@ function getLastUpdatedFields(selectedPaper, selectedGsm) {
     costPerSheet.style.color = "white";
   }
 }
-
+const sizeSelect = document.getElementById("size");
 function populateSizeSelect() {
-  const sizeSelect = document.getElementById("size");
   sizeSelect.innerHTML = "";
   if (uping && uping.length > 0) {
     const productSet = new Set(
@@ -890,6 +892,8 @@ function populateSizeSelect() {
     updateSheetPiecesValue();
     sizeSelect.addEventListener("change", () => {
       updateSheetPiecesValue();
+      sizeValue = sizeSelect.value;
+      // selectedFields(sizeValue);
     });
     const selectedSheetSizeElement = document.getElementById("sheetSize");
     selectedSheetSizeElement.addEventListener("change", () => {
@@ -897,10 +901,10 @@ function populateSizeSelect() {
     });
   }
 }
+const selectedSheetSizeElement = document.getElementById("sheetSize");
+const selectedSheetSizeValue = selectedSheetSizeElement.value;
 
 function updateSheetPiecesValue() {
-  const selectedSheetSizeElement = document.getElementById("sheetSize");
-  const selectedSheetSizeValue = selectedSheetSizeElement.value;
   const sheetSizeField = fields.find((field) => field.id === "sheetSize");
 
   if (!sheetSizeField) {
@@ -920,10 +924,10 @@ function updateSheetPiecesValue() {
   const selectedSheetSizeLabel = selectedSheetSizeOption.label;
   const selectedProductElement = document.getElementById("size");
   const selectedProduct = selectedProductElement.value;
+
   const selectedProductData = uping.find(
     (item) => item.product === selectedProduct
   );
-
   if (selectedProductData) {
     const sheetPieces = selectedProductData[selectedSheetSizeLabel];
     sizesValue2 = sheetPieces === "" ? "0" : sheetPieces;
@@ -1306,6 +1310,7 @@ function getConfig() {
   });
   jobColorsFElement.addEventListener("change", () => {
     jobColorsFront = parseInt(jobColorsFElement.value, 10); // Convert to an integer
+    // selectedFields(null,null,jobColorsFront);
     if (
       (sideOptionValue === "Double Sided" &&
         impositionValue === "Not Applied") ||
@@ -1318,6 +1323,7 @@ function getConfig() {
         jobColorsFront,
         jobColorsBack
       );
+      updateCTPCell(selectedPressData);
     } else {
       jobColorsBack = 0;
       updateBaseRate(
@@ -1378,25 +1384,18 @@ function updateBaseRate(
     impressionsCell2.className = "fs-6 col-6";
   }
 }
+const selectedProductElement = document.getElementById("selectProduct");
+const selectedProductValue = selectedProductElement.value;
+
 document.addEventListener("DOMContentLoaded", function () {
   const generateInvoiceBtn = document.getElementById("generateInvoiceBtn");
   const modalContent = document.getElementById("invoiceModalContent");
 
   generateInvoiceBtn.addEventListener("click", function () {
-    const selectedProductElement = document.getElementById("selectProduct");
-    const selectedProductValue = selectedProductElement.value;
     const selectedProductSize = document.getElementById("size");
     const selectedSizeValue = selectedProductSize.value;
     const selectedGsm = document.getElementById("grams");
     const selectedGsmValue = selectedGsm.value;
-    var totalQuantities;
-    const orderSummary = {
-      product: "Flyer",
-      size: "DL",
-      gsm: "113 gsm",
-      qty: "3,000",
-      total: "Rs: 45,000/-",
-    };
 
     const designInfo = "Customer will provide the design.";
 
@@ -1431,6 +1430,39 @@ document.addEventListener("DOMContentLoaded", function () {
     invoiceModal.show();
   });
 });
+function selectedFields() {
+  const sizeValue = document.getElementById("size").value;
+  const selectedPaper = paperStockSelect.value;
+  const selectedGsm = gsmSelect.value;
+  const impositionValue = impositionElement.value;
+  const selectedSheetSizeValue = selectedSheetSizeElement.value;
+  const jobColorsBack = document.getElementById("jobColors").value;
+  fetch("http://localhost:3000/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      selectedProductValue,
+      jobColorsFront,
+      sizeValue,
+      selectedPaper,
+      selectedGsm,
+      selectedSheetSizeValue,
+      sideOptionValue,
+      impositionValue,
+      jobColorsBack
+    }), // Send the selected product value as JSON
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("response", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 populateSizeSelect();
 getConfig();
+// selectedFields();
